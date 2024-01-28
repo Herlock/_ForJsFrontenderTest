@@ -7,10 +7,9 @@ function OnStartup()
 	windowPresenterLeft = new GameUnitCardWindowPresenter($("#battle-unit-card-window-left"), 'left');
 	windowPresenterRight = new GameUnitCardWindowPresenter($("#battle-unit-card-window-right"), 'right');
 	
-	
 	// todo вызов Одного из Тестов для отображения в UI
-	TestArcher1();
-	//TestDeadcountess1();
+	//TestArcher1();
+	TestDeadcountess1();
 	//TestArcher2();
 }
 

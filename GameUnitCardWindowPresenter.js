@@ -94,8 +94,21 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 	}
 
 	this.fillAttackSubtableArray = function(unit, unitCard)
-	{
+	{		
 		let critChanceColorStyle = (unitCard.critChance > 0 ? attackColorStyle : grayColorStyle);
+		
+		if (unit.type === "deadcountess") {
+			return [
+				`<span class="battle-unit-card-window-text-attack">Атака - Заморозка</span>`,
+				``,
+				
+				`<span class="battle-unit-card-window-text-attack">Дальность атаки:</span>`,
+				`<span class="battle-unit-card-window-text-attack">` + unitCard.range + `</span>`,	
+				``,``,
+			];
+		}
+	
+
 		return [
 			`<span class="battle-unit-card-window-text-attack">Атака:</span>`,
 			`<span class="battle-unit-card-window-text-attack">` + unitCard.strength + `</span>`,
@@ -105,6 +118,7 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 			`<span class="battle-unit-card-window-text" style="color: ` + critChanceColorStyle + `">` + (unitCard.critChance * 100 + "%") + `</span>`,
 		];
 	}
+	
 
 	this.fillCooldownConfigSubtableArray = function(unit, unitCard)
 	{
