@@ -1,0 +1,19 @@
+.container-table {
+  display: table;
+}
+.container-table>.row {
+  display: table-row;
+}
+.container-table>.row>* {
+  display: table-cell;
+  white-space:nowrap;
+}
+
+.battle-unit-card-window-text, .battle-unit-card-window-text-attack {
+  font-weight: 500 !important;
+  font-size: 1.0rem !important;
+  white-space: nowrap !important;
+}
+.battle-unit-card-window-text-attack {
+  color: #FF6767
+}
