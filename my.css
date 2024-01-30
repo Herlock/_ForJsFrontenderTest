@@ -17,3 +17,26 @@
 .battle-unit-card-window-text-attack {
   color: #FF6767
 }
+/* стили для бафов */
+
+#buffs-container{
+  background-color: #000000B4;
+  width: 100%;
+}
+/* 
+.buffs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.buffs-table th, .buffs-table td {
+  border: 1px solid #dddddd00;
+  padding: 8px;
+  text-align: left;
+}
+
+.buffs-table th {
+  background-color: #f2f2f200;
+}
+ */

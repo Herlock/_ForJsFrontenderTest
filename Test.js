@@ -9,8 +9,8 @@ function OnStartup()
 	
 	// todo вызов Одного из Тестов для отображения в UI
 	//TestArcher1();
-	TestDeadcountess1();
-	//TestArcher2();
+	//TestDeadcountess1();
+	TestArcher2();
 }
 
 // карта (конфиг) всех юнитов типа Лучник
@@ -103,9 +103,11 @@ function TestArcher2()
 			isOnBarrier: true,	// todo баффы должны отображаться
 			isOnFreeze: true,	// todo баффы должны отображаться
 			isOnPoison: true,	// todo баффы должны отображаться
-			isOnArmor: true,	// todo баффы должны отображаться
+			isOnArmor: false,	// todo баффы должны отображаться
 		},
 	};
 	
 	windowPresenterLeft.Show(unit, unitCardArcher);
+
+
 }

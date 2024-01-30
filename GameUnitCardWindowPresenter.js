@@ -77,11 +77,16 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 				</div>
 			</div></div>`
 			+ // todo баффы ..
-			`<div class="row" style="margin-top: 2px; float: ` + this.styleFloatOfBuffPanel + `;"><div class="col-12">
-			</div></div>`
-		);
+			`<div class="row" style="margin-top: 2px; float: ` + this.styleFloatOfBuffPanel + `;">
+				<div class="col-12">
+					<div id="buffs-container"></div>
+				</div>
+			</div>`
 
+		);
+		
 		this.windowDiv.removeClass("invisible");
+		this.ShowBuffs(unit);
 	}
 
 	this.fillColoredPercentPropertySubtableArray = function(title, value)
@@ -96,7 +101,7 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 	this.fillAttackSubtableArray = function(unit, unitCard)
 	{		
 		let critChanceColorStyle = (unitCard.critChance > 0 ? attackColorStyle : grayColorStyle);
-		
+		//можно переделать под switch case для большего количества юнитов, либо уже переписывать процесс обработки юнита
 		if (unit.type === "deadcountess") {
 			return [
 				`<span class="battle-unit-card-window-text-attack">Атака - Заморозка</span>`,
@@ -154,4 +159,52 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 			``
 			];
 	}
+
+	this.ShowBuffs = function(unit) {
+		let buffsContainer = $("#buffs-container");
+	
+		// Очистка контейнера перед отображением новых баффов
+		buffsContainer.empty();
+	
+		// Проверка на наличие баффов
+		if (unit.effects.isOnFocus || unit.effects.isOnBarrier || unit.effects.isOnFreeze || unit.effects.isOnPoison || unit.effects.isOnArmor) {
+			let buffsTable = $("<table>").addClass("buffs-table");
+	
+			// Добавление заголовка таблицы
+			let headerRow = $("<tr>");
+			headerRow.append($("<th>").text("Бафф"));
+			headerRow.append($("<th>").text("Длительность"));
+			buffsTable.append(headerRow);
+	
+			// Добавление данных о баффах
+			if (unit.effects.isOnFocus) {
+				buffsTable.append(createBuffRow("Фокус", unit.effects.durationFocus));
+			}
+			if (unit.effects.isOnBarrier) {
+				buffsTable.append(createBuffRow("Барьер", unit.effects.durationBarrier));
+			}
+			if (unit.effects.isOnFreeze) {
+				buffsTable.append(createBuffRow("Заморозка", unit.effects.durationFreeze));
+			}
+			if (unit.effects.isOnPoison) {
+				buffsTable.append(createBuffRow("Яд", unit.effects.durationPoison));
+			}
+			if (unit.effects.isOnArmor) {
+				buffsTable.append(createBuffRow("Броня", unit.effects.durationArmor));
+			}
+	
+			// Добавление таблицы с баффами в контейнер
+			buffsContainer.append(buffsTable);
+		}
+	};
+	
+	// Вспомогательная функция для создания строки с баффом
+	function createBuffRow(buffName, duration) {
+		let row = $("<tr>");
+		row.append($("<td>").text(buffName));
+		row.append($("<td>").text(duration));
+		return row;
+	}
+	
+	
 }
