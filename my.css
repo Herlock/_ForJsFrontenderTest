@@ -22,21 +22,17 @@
 #buffs-container{
   background-color: #000000B4;
   width: 100%;
+  font-weight: 500 !important;
+  font-size: 1.0rem !important;
+  white-space: nowrap !important;
 }
-/* 
-.buffs-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-.buffs-table th, .buffs-table td {
-  border: 1px solid #dddddd00;
-  padding: 8px;
-  text-align: left;
+#buffs-container th{
+  color: #ffffff;
 }
 
-.buffs-table th {
-  background-color: #f2f2f200;
+#buffs-container td{
+  color: #FFEA88;
 }
- */
+
+
+

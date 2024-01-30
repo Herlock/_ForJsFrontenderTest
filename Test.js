@@ -103,7 +103,7 @@ function TestArcher2()
 			isOnBarrier: true,	// todo баффы должны отображаться
 			isOnFreeze: true,	// todo баффы должны отображаться
 			isOnPoison: true,	// todo баффы должны отображаться
-			isOnArmor: false,	// todo баффы должны отображаться
+			isOnArmor: true,	// todo баффы должны отображаться
 		},
 	};
 	

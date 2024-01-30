@@ -77,16 +77,16 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 				</div>
 			</div></div>`
 			+ // todo баффы ..
-			`<div class="row" style="margin-top: 2px; float: ` + this.styleFloatOfBuffPanel + `;">
+			`<div class="row" style="margin-top: 2px;` + this.styleFloatOfBuffPanel + `;">
 				<div class="col-12">
-					<div id="buffs-container"></div>
+					<div id="buffs-container" class="container-table rounded"></div>
 				</div>
 			</div>`
 
 		);
 		
 		this.windowDiv.removeClass("invisible");
-		this.ShowBuffs(unit);
+		this.ShowBuffs(unit, unitCard);
 	}
 
 	this.fillColoredPercentPropertySubtableArray = function(title, value)
@@ -159,8 +159,7 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 			``
 			];
 	}
-
-	this.ShowBuffs = function(unit) {
+	this.ShowBuffs = function(unit, unitCard) {
 		let buffsContainer = $("#buffs-container");
 	
 		// Очистка контейнера перед отображением новых баффов
@@ -172,25 +171,26 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 	
 			// Добавление заголовка таблицы
 			let headerRow = $("<tr>");
-			headerRow.append($("<th>").text("Бафф"));
-			headerRow.append($("<th>").text("Длительность"));
+			headerRow.append($("<th>").text(""));
+			headerRow.append($("<th>").text("Примененные способности"));
+	
 			buffsTable.append(headerRow);
 	
 			// Добавление данных о баффах
 			if (unit.effects.isOnFocus) {
-				buffsTable.append(createBuffRow("Фокус", unit.effects.durationFocus));
+				buffsTable.append(createBuffRow("focus", "Фокус", " (находится под атакой)"));
 			}
 			if (unit.effects.isOnBarrier) {
-				buffsTable.append(createBuffRow("Барьер", unit.effects.durationBarrier));
+				buffsTable.append(createBuffRow("barrier", "Барьер", " (Не повреждаемый)"));
 			}
 			if (unit.effects.isOnFreeze) {
-				buffsTable.append(createBuffRow("Заморозка", unit.effects.durationFreeze));
+				buffsTable.append(createBuffRow("freeze", "Заморозка", " (Не атакует, не двигается)"));
 			}
 			if (unit.effects.isOnPoison) {
-				buffsTable.append(createBuffRow("Яд", unit.effects.durationPoison));
+				buffsTable.append(createBuffRow("poison", " Яд", " (подвиньтесь для снятия)(Не атакует, урон каждый ход)"));
 			}
 			if (unit.effects.isOnArmor) {
-				buffsTable.append(createBuffRow("Броня", unit.effects.durationArmor));
+				buffsTable.append(createBuffRow("armor", "Броня", (spellsConfig.MasterOltrodor_ArmorIncreasePercent > 0 ? " +" : " -") + spellsConfig.MasterOltrodor_ArmorIncreasePercent + "%"));
 			}
 	
 			// Добавление таблицы с баффами в контейнер
@@ -199,12 +199,14 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 	};
 	
 	// Вспомогательная функция для создания строки с баффом
-	function createBuffRow(buffName, duration) {
+	function createBuffRow(buffName, buffDisplayName, Bufftext) {
 		let row = $("<tr>");
-		row.append($("<td>").text(buffName));
-		row.append($("<td>").text(duration));
+		row.append($("<td>").html(`<img src="buff_img/${buffName}.png" alt="${buffDisplayName}">`));
+		row.append($("<td>").text(`${buffDisplayName}${Bufftext}`));
+	
 		return row;
 	}
+	
 	
 	
 }
