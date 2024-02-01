@@ -17,22 +17,42 @@
 .battle-unit-card-window-text-attack {
   color: #FF6767
 }
-/* стили для бафов */
-
-#buffs-container{
+/* Обновленные стили для блока с баффами */
+#buffs-container {
   background-color: #000000B4;
   width: 100%;
   font-weight: 500 !important;
   font-size: 1.0rem !important;
   white-space: nowrap !important;
-}
-#buffs-container th{
-  color: #ffffff;
+  padding: 5px !important;
+  margin-bottom: 5px !important; /* Новый стиль для отступа снизу */
 }
 
-#buffs-container td{
+/* Стили для заголовка "Примененные способности" */
+.abilities-header {
+  margin-bottom: 5px !important;
+  color: #ffffff;
+  width: 100% !important; /* Добавьте это свойство */
+}
+
+#buffs-container .buff-row {
+  padding-right: 0;
+  padding-left: 0.5rem;
+  display: flex;
+}
+
+.buff-icon {
+  width: 27px;
+  height: 24px;
+  margin-right: 5px;
+}
+
+#buffs-container .buff-row .buff-info {
   color: #FFEA88;
 }
 
+#buffs-container .buff-row .buff-info span {
+
+}
 
 

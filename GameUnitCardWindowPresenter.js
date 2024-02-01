@@ -159,53 +159,51 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 			``
 			];
 	}
+	
 	this.ShowBuffs = function(unit, unitCard) {
 		let buffsContainer = $("#buffs-container");
-	
+	  
 		// Очистка контейнера перед отображением новых баффов
 		buffsContainer.empty();
-	
+	  
 		// Проверка на наличие баффов
-		if (unit.effects.isOnFocus || unit.effects.isOnBarrier || unit.effects.isOnFreeze || unit.effects.isOnPoison || unit.effects.isOnArmor) {
-			let buffsTable = $("<table>").addClass("buffs-table");
-	
-			// Добавление заголовка таблицы
-			let headerRow = $("<tr>");
-			headerRow.append($("<th>").text(""));
-			headerRow.append($("<th>").text("Примененные способности"));
-	
-			buffsTable.append(headerRow);
-	
-			// Добавление данных о баффах
-			if (unit.effects.isOnFocus) {
-				buffsTable.append(createBuffRow("focus", "Фокус", " (находится под атакой)"));
-			}
-			if (unit.effects.isOnBarrier) {
-				buffsTable.append(createBuffRow("barrier", "Барьер", " (Не повреждаемый)"));
-			}
-			if (unit.effects.isOnFreeze) {
-				buffsTable.append(createBuffRow("freeze", "Заморозка", " (Не атакует, не двигается)"));
-			}
-			if (unit.effects.isOnPoison) {
-				buffsTable.append(createBuffRow("poison", " Яд", " (подвиньтесь для снятия)(Не атакует, урон каждый ход)"));
-			}
-			if (unit.effects.isOnArmor) {
-				buffsTable.append(createBuffRow("armor", "Броня", (spellsConfig.MasterOltrodor_ArmorIncreasePercent > 0 ? " +" : " -") + spellsConfig.MasterOltrodor_ArmorIncreasePercent + "%"));
-			}
-	
-			// Добавление таблицы с баффами в контейнер
-			buffsContainer.append(buffsTable);
+		let hasBuffs = false;
+	  
+	  // Добавление заголовка "Примененные способности" (если есть баффы)
+	  // Добавление заголовка "Примененные способности" (если есть баффы)
+	  let abilitiesHeader = $("<div>").addClass("row abilities-header"); // Уберите "invisible" здесь
+	  abilitiesHeader.append($("<span>").addClass("col-12 abilities-header-text").text("Примененные способности"));
+	  buffsContainer.append(abilitiesHeader);
+	  
+	  
+		// Добавление данных о баффах
+		hasBuffs = this.addBuffToContainer(buffsContainer, unit.effects.isOnFocus, "focus", "Фокус", " (находится под атакой)");
+		hasBuffs = this.addBuffToContainer(buffsContainer, unit.effects.isOnBarrier, "barrier", "Барьер", " (Не повреждаемый)") || hasBuffs;
+		hasBuffs = this.addBuffToContainer(buffsContainer, unit.effects.isOnFreeze, "freeze", "Заморозка", " (Не атакует, не двигается)") || hasBuffs;
+		hasBuffs = this.addBuffToContainer(buffsContainer, unit.effects.isOnPoison, "poison", " Яд", " (подвиньтесь для снятия)(Не атакует, урон каждый ход)") || hasBuffs;
+		hasBuffs = this.addBuffToContainer(buffsContainer, unit.effects.isOnArmor, "armor", "Броня", (spellsConfig.MasterOltrodor_ArmorIncreasePercent > 0 ? " +" : " -") + spellsConfig.MasterOltrodor_ArmorIncreasePercent + "%") || hasBuffs;
+	  
+		// Отображение контейнера с баффами, если есть хотя бы один бафф
+		if (hasBuffs) {
+			buffsContainer.removeClass("invisible");
+	  abilitiesHeader.removeClass("invisible");
+	  
 		}
-	};
-	
-	// Вспомогательная функция для создания строки с баффом
-	function createBuffRow(buffName, buffDisplayName, Bufftext) {
-		let row = $("<tr>");
-		row.append($("<td>").html(`<img src="buff_img/${buffName}.png" alt="${buffDisplayName}">`));
-		row.append($("<td>").text(`${buffDisplayName}${Bufftext}`));
-	
-		return row;
-	}
+	  };
+	  
+	  // Вспомогательная функция для добавления строки с баффом
+	  this.addBuffToContainer = function(container, hasBuff, buffName, buffDisplayName, buffText) {
+		if (hasBuff) {
+			let buffRow = $("<div>").addClass(" buff-row");
+			buffRow.append($("<div>").addClass("buff-icon ").html(`<img src="buff_img/${buffName}.png" alt="${buffDisplayName}">`));
+			buffRow.append($("<div>").addClass("col buff-info").text(`${buffDisplayName}${buffText}`));
+	  
+			container.append(buffRow);
+			return true; // Возвращаем true, если был добавлен хотя бы один бафф
+		}
+	  
+		return false;
+	  };
 	
 	
 	
