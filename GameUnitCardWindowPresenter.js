@@ -76,10 +76,10 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 					</div>
 				</div>
 			</div></div>`
-			+ // todo баффы ..
+			+ // баффы ..
 			`<div class="row" style="margin-top: 2px;` + this.styleFloatOfBuffPanel + `;">
 				<div class="col-12">
-					<div id="buffs-container" class="container-table rounded"></div>
+					<div id="buffs-container" class="container-table rounded invisible"></div>
 				</div>
 			</div>`
 
@@ -98,22 +98,31 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 		];
 	}
 
-	this.fillAttackSubtableArray = function(unit, unitCard)
-	{		
+	this.fillAttackSubtableArray = function(unit, unitCard) {
 		let critChanceColorStyle = (unitCard.critChance > 0 ? attackColorStyle : grayColorStyle);
-		//можно переделать под switch case для большего количества юнитов, либо уже переписывать процесс обработки юнита
+	
+		// Обработка типа юнита "deadcountess"
 		if (unit.type === "deadcountess") {
-			return [
-				`<span class="battle-unit-card-window-text-attack">Атака - Заморозка</span>`,
-				``,
-				
-				`<span class="battle-unit-card-window-text-attack">Дальность атаки:</span>`,
-				`<span class="battle-unit-card-window-text-attack">` + unitCard.range + `</span>`,	
-				``,``,
-			];
+			return fillDeadCountessAttackInfo(unitCard);
 		}
 	
-
+		// Обработка других типов юнитов
+		return fillRegularUnitAttackInfo(unitCard, critChanceColorStyle);
+	}
+	
+	// Функция для заполнения информации об атаке для типа юнита "deadcountess"
+	function fillDeadCountessAttackInfo(unitCard) {
+		return [
+			`<span class="battle-unit-card-window-text-attack">Атака - Заморозка</span>`,
+			``,
+			`<span class="battle-unit-card-window-text-attack">Дальность атаки:</span>`,
+			`<span class="battle-unit-card-window-text-attack">` + unitCard.range + `</span>`,
+			``,``,
+		];
+	}
+	
+	// Функция для заполнения информации об атаке для обычных типов юнитов
+	function fillRegularUnitAttackInfo(unitCard, critChanceColorStyle) {
 		return [
 			`<span class="battle-unit-card-window-text-attack">Атака:</span>`,
 			`<span class="battle-unit-card-window-text-attack">` + unitCard.strength + `</span>`,
@@ -123,6 +132,7 @@ function GameUnitCardWindowPresenter(windowDiv, styleFloatOfBuffPanel)
 			`<span class="battle-unit-card-window-text" style="color: ` + critChanceColorStyle + `">` + (unitCard.critChance * 100 + "%") + `</span>`,
 		];
 	}
+	
 	
 
 	this.fillCooldownConfigSubtableArray = function(unit, unitCard)
